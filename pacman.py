@@ -107,6 +107,57 @@ def world():
                 path.dot(2, 'white')
 
 
+def move_left(course):
+    course.x = -5
+    course.y = 0
+
+def move_right(course):
+    course.x = 5
+    course.y = 0
+
+def move_up(course):
+    course.x = 0
+    course.y = 5
+
+def move_down(course):
+    course.x = 0
+    course.y = -5
+
+def plan_route(point, course):
+    if pacman.x < point.x:
+        # Si pacman esta hacia la izquierda, mover fantasma hacia la izquierda
+        move_left(course)
+        if not valid(point + course):
+            # Si esta bloqueado, moverse hacia arriba o abajo
+            move_up(course)
+            if not valid(point + course):
+                move_down(course)
+    elif pacman.x > point.x:
+        # Si pacman esta hacia la derecha, mover fantasma hacia la derecha
+        move_right(course)
+        if not valid(point + course):
+            # Si esta bloqueado, moverse hacia arriba o abajo
+            move_up(course)
+            if not valid(point + course):
+                move_down(course)
+    elif pacman.y < point.y:
+        # Si pacman esta hacia arriba, mover fantasma hacia arriba
+        move_down(course)
+        if not valid(point + course):
+            # Si esta bloqueado, moverse hacia la izquierda o derecha
+            move_right(course)
+            if not valid(point + course):
+                move_left(course)
+    elif pacman.y > point.y:
+        # Si pacman esta hacia abajo, mover fantasma hacia abajo
+        move_up(course)
+        if not valid(point + course):
+            # Si esta bloqueado, moverse hacia la izquierda o derecha
+            move_right(course)
+            if not valid(point + course):
+                move_left(course)
+
+
 def move():
     """Move pacman and all ghosts."""
     writer.undo()
@@ -130,19 +181,15 @@ def move():
     goto(pacman.x + 10, pacman.y + 10)
     dot(20, 'yellow')
 
+    # Mover fantasmas.
     for point, course in ghosts:
+
+        # Planear ruta hacia pacman.
+        plan_route(point, course)
+
         if valid(point + course):
             point.move(course)
-        else:
-            options = [
-                vector(7, 0),# Aqui se cambiar la valores de vector para fantasmmas para ir un poco mas rapido que estaba antes. 
-                vector(-7, 0),
-                vector(0, 7),
-                vector(0, -7),
-            ]
-            plan = choice(options)
-            course.x = plan.x
-            course.y = plan.y
+
 
         up()
         goto(point.x + 10, point.y + 10)
