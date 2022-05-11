@@ -90,8 +90,8 @@ def valid(point):
 
 def world():
     """Draw world using path."""
-    bgcolor('black')
-    path.color('orange')
+    bgcolor('black') # Aqui cambiamos la black para muestra color
+    path.color('orange') #Aqui estamos cambian la color de la tabelro a narango
 
     for index in range(len(tiles)):
         tile = tiles[index]
@@ -135,7 +135,7 @@ def move():
             point.move(course)
         else:
             options = [
-                vector(7, 0),
+                vector(7, 0),# Aqui se cambiar la valores de vector para fantasmmas para ir un poco mas rapido que estaba antes. 
                 vector(-7, 0),
                 vector(0, 7),
                 vector(0, -7),
