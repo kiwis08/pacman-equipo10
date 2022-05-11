@@ -108,20 +108,20 @@ def world():
 
 
 def move_left(course):
-    course.x = -5
+    course.x = -7 # Aqui cambiamos el -7 para que se mueva a la izquierda más rápido
     course.y = 0
 
 def move_right(course):
-    course.x = 5
+    course.x = 7
     course.y = 0
 
 def move_up(course):
     course.x = 0
-    course.y = 5
+    course.y = 7
 
 def move_down(course):
     course.x = 0
-    course.y = -5
+    course.y = -7
 
 def plan_route(point, course):
     if pacman.x < point.x:
